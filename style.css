@@ -1,0 +1,393 @@
+/*                      reset básico                        */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+/*      variaves      */
+:root {
+    --azul-escuro:  #0D1F3C;
+    --amarelo:      #F5C400;
+    --branco:       #FFFFFF;
+    --cinza-claro:  #e8ebf1;
+    --texto-escuro: #0D1F3C;
+}
+
+body {
+    font-family: sans-serif;
+    background-color: var(--cinza-claro);
+    color: var(--texto-escuro);
+    min-height: 100vh;
+}
+header {
+    background-color: var(--azul-escuro);
+    border-bottom: 4px solid var(--amarelo);
+    padding: 18px 40px;
+}
+.bloco-dia-inicial {
+    overflow-x: auto;
+}
+
+header h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--branco);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+
+
+
+main {
+    max-width: 1300px;
+    margin: 36px auto;
+    padding: 0 32px;
+    display: grid;
+    grid-template-columns: 1fr 295px;
+    gap: 28px;
+    align-items: start;
+}
+#Sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    position: sticky;
+    top: 24px;
+}
+
+section {
+    background-color: var(--branco);
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(13, 31, 60, 0.10);
+    padding: 24px 28px;
+    border-top:3px solid var(--azul-escuro);
+}
+.bloco-semana {
+    margin-bottom: 32px;
+    border: 3px solid transparent;
+    border-radius: 8px;
+    padding: 4px;
+    transition: border-color 0.2s;
+}
+.bloco-semana.semana-selecionada {
+    border-color: var(--amarelo);
+}
+
+.cabecalho-semana {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    cursor: pointer;
+}
+.titulo-semana {
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--azul-escuro);
+}
+
+.titulo-semana:focus {
+    outline: none;
+    background-color: rgba(245, 196, 0, 0.15);
+    border-radius: 4px;
+    padding: 2px 6px;
+}
+
+.btn-minimizar-semana {
+    padding: 4px 10px;
+    border: transparent;
+    border-radius: 4px;
+    background: transparent;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #c2bfbf;
+    cursor: pointer;
+}
+.btn-minimizar-semana:hover {
+    color: var(--cinza-claro);  
+}
+.acoes-semana {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+.btn-pdf {
+    padding: 4px 10px;
+    border: 1.5px solid var(--amarelo);
+    border-radius: 4px;
+    background: transparent;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--azul-escuro);
+    cursor: pointer;
+}
+.btn-pdf:hover {
+    background-color: var(--amarelo);
+}
+.btn-excluir {
+    padding: 4px 10px;
+    border: 1.5px solid var(--branco)  ;
+    border-radius: 4px;
+    background: transparent;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #c2bfbf;
+    cursor: pointer;
+}
+.btn-excluir:hover {
+    border-color: #e53e3e;
+    color: #e53e3e;
+}
+.cabecalho-data {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+
+}
+.cabecalho-data h2 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--azul-escuro);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+}
+thead tr {
+    background-color: var(--azul-escuro);
+    color: var(--branco);
+}
+thead th {
+    padding: 11px 14px;
+    text-align: left;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+tbody tr {
+    border-bottom: 1px solid var(--cinza-claro);
+    
+}
+tbody td {
+    padding: 10px 14px;
+}
+tbody td {
+    padding: 6px 8px;
+}
+tbody input {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1.5px solid var(--cinza-claro);
+    border-radius: 4px;
+    font-size: 0.88rem;
+    color: var(--texto-escuro);
+    background: var(--cinza-claro);
+}
+.acoes-dia {
+    margin-top: 4px;
+}
+.acoes-dia button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+}
+.btn-nova-linha {
+    display: block;
+    width: 100%;
+}
+.btn-proximo-dia{
+    display: block;
+    width: 100%;
+    margin-top: 24px;
+    border: 2px dashed var(--cinza-claro);
+    border-radius: 6px;
+    background: transparent;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--texto-escuro);
+    cursor: pointer;
+    padding: 8px 16px ;
+}
+.btn-proximo-dia:hover {
+    border-color: var(--amarelo);
+    color: var(--azul-escuro);
+}
+.total-km {
+    font-weight: 700;
+    color: var(--azul-escuro);
+}
+#titulo-resumo {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--texto-escuro);
+    margin-bottom: 12px;
+}
+#ResumoSemana thead th:last-child {
+    color: var(--amarelo);
+}
+#ResumoSemana tbody td:last-child {
+    color: var(--azul-escuro);
+    font-weight: 600;
+}
+#linha-total {
+    border-top: 2px solid var(--azul-escuro);
+    font-weight: 600;
+}
+#linha-total th,
+#linha-total td {
+    font-weight: 700;
+    padding: 10px 14px;
+    text-transform: uppercase;
+}
+#Configuracao {
+    border-top-color: var(--amarelo);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+#Configuracao div {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+#Configuracao label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--azul-escuro);
+}
+#Configuracao input {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1.5px solid var(--cinza-claro);
+    border-radius: 4px;
+    font-size: 0.95rem;
+    color: var(--texto-escuro);
+    background: var(--cinza-claro);
+
+}
+#Configuracao input:focus {
+    outline: none;
+    border-color: var(--amarelo);
+    box-shadow: 0 0 0 3px rgba(245,196,0,0.18);
+}
+#btn-nova-semana {
+width: 100%;
+padding: 10px;
+border: 2px dashed var(--cinza-claro);
+border-radius: 6px;
+background: transparent;
+font-size: 0.9rem;
+font-weight: 600;
+text-transform: uppercase;
+letter-spacing: 0.06em;
+color: var(--texto-escuro);
+cursor: pointer;
+}
+#btn-nova-semana:hover {
+    border-color: var(--amarelo);
+    color: var(--azul-escuro);
+}
+
+.btn-excluir-linha {
+    padding: 4px 8px;
+    border: 1.5px solid #e53e33;
+    border-radius: 4px;
+    background: transparent;
+    color: #e53e33;
+    cursor: pointer;
+}
+.btn-excluir-linha:hover {
+    background-color: #e53e33;
+    color: var(--branco);
+}
+.btn-excluir-dia {
+     padding: 4px 8px;
+    border: 1.5px solid #e53e33;
+    border-radius: 4px;
+    background: transparent;
+    color: #e53e33;
+    cursor: pointer;
+}
+.btn-excluir-dia:hover {
+    background-color: #e53e33;
+    color: var(--branco);
+}
+
+.escondido {
+    display: none;
+}
+
+#DadosUsuario {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+#DadosUsuario div {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+#DadosUsuario label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--azul-escuro);
+}
+
+#DadosUsuario input {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1.5px solid var(--cinza-claro);
+    border-radius: 4px;
+    font-size: 0.95rem;
+    color: var(--texto-escuro);
+    background: var(--cinza-claro);
+}
+
+#DadosUsuario input:focus {
+    outline: none;
+    border-color: var(--amarelo);
+    box-shadow: 0 0 0 3px rgba(245,196,0,0.18);
+}
+
+#DadosUsuario select {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1.5px solid var(--cinza-claro);
+    border-radius: 4px;
+    font-size: 0.95rem;
+    color: var(--texto-escuro);
+    background: var(--cinza-claro);
+    font-family: inherit;
+}
+
+#DadosUsuario select:focus {
+    outline: none;
+    border-color: var(--amarelo);
+    box-shadow: 0 0 0 3px rgba(245,196,0,0.18);
+}
