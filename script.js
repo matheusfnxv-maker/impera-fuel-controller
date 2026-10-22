@@ -170,8 +170,9 @@ areaSemanas.addEventListener("click", function (evento) {
     if (evento.target.classList.contains("btn-minimizar-semana")) {
         const semana = evento.target.closest(".bloco-semana");
         const conteudo = semana.querySelector(".conteudo-semana");
-        conteudo.classList.toggle("escondido");
-        evento.target.textContent = conteudo.classList.contains("escondido") ? "►" : "▼";
+        const minimizada = conteudo.classList.toggle("escondido");
+        evento.target.classList.toggle("semana-recolhida", minimizada);
+        evento.target.setAttribute("aria-label", minimizada ? "Expandir semana" : "Minimizar semana");
     }
 });
 
@@ -211,7 +212,10 @@ btnNovaSemana.addEventListener("click", function () {
     primeiraLinha.querySelector(".total-km").textContent = "0";
 
     novaSemana.querySelector(".conteudo-semana").classList.remove("escondido");
-    novaSemana.querySelector(".btn-minimizar-semana").textContent = "▼";
+    const btnMinimizar = novaSemana.querySelector(".btn-minimizar-semana");
+    btnMinimizar.classList.remove("semana-recolhida");
+    btnMinimizar.setAttribute("aria-label", "Minimizar semana");
+    btnMinimizar.textContent = "▼";
 
     areaSemanas.appendChild(novaSemana);
     calculaResumo();
@@ -378,7 +382,7 @@ function montaSemanaHTML(semana, indice) {
                 <div class="acoes-semana">
                     <button class="btn-pdf">PDF</button>
                     <button class="btn-excluir">Excluir</button>
-                    <button class="btn-minimizar-semana">▼</button>
+                    <button class="btn-minimizar-semana" aria-label="Minimizar semana">▼</button>
                 </div>
             </div>
             <div class="conteudo-semana">

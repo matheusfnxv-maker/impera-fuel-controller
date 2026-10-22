@@ -1,393 +1,615 @@
-/*                      reset básico                        */
 *, *::before, *::after {
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
 }
-/*      variaves      */
+
 :root {
-    --azul-escuro:  #0D1F3C;
-    --amarelo:      #F5C400;
-    --branco:       #FFFFFF;
-    --cinza-claro:  #e8ebf1;
-    --texto-escuro: #0D1F3C;
+    color-scheme: light;
+    --azul-escuro: #102544;
+    --azul: #1d3c63;
+    --amarelo: #f5c400;
+    --branco: #fff;
+    --cinza-claro: #e8edf4;
+    --texto-escuro: #14243a;
+    --texto-suave: #718096;
+    --fundo: #f3f6fb;
+    --borda: #e2e8f0;
+    --perigo: #d84a4a;
+    --sombra: 0 12px 32px rgba(16, 37, 68, 0.08);
 }
 
 body {
-    font-family: sans-serif;
-    background-color: var(--cinza-claro);
-    color: var(--texto-escuro);
     min-height: 100vh;
+    margin: 0;
+    background:
+        radial-gradient(ellipse at 12% 0%, rgba(245, 196, 0, 0.11), transparent 30rem),
+        var(--fundo);
+    color: var(--texto-escuro);
+    font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
 }
+
+button, input, select {
+    font: inherit;
+}
+
+button {
+    -webkit-tap-highlight-color: transparent;
+}
+
 header {
-    background-color: var(--azul-escuro);
-    border-bottom: 4px solid var(--amarelo);
-    padding: 18px 40px;
+    position: relative;
+    overflow: hidden;
+    padding: 26px max(28px, calc((100vw - 1440px) / 2));
+    background: linear-gradient(115deg, #102544, #1b3d66);
+    box-shadow: 0 4px 18px rgba(16, 37, 68, 0.16);
 }
-.bloco-dia-inicial {
-    overflow-x: auto;
+
+header::after {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--amarelo), #ffe47a 50%, var(--amarelo));
+    content: "";
 }
 
 header h1 {
-    font-size: 1.8rem;
-    font-weight: 700;
+    max-width: 1440px;
+    margin: 0 auto;
     color: var(--branco);
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
+    font-size: clamp(1.15rem, 2vw, 1.65rem);
+    font-weight: 750;
+    letter-spacing: 0.035em;
 }
-
-
-
 
 main {
-    max-width: 1300px;
-    margin: 36px auto;
-    padding: 0 32px;
     display: grid;
-    grid-template-columns: 1fr 295px;
-    gap: 28px;
+    grid-template-columns: minmax(0, 1fr) 310px;
     align-items: start;
-}
-#Sidebar {
-    display: flex;
-    flex-direction: column;
     gap: 28px;
+    width: min(1440px, 100%);
+    margin: 34px auto;
+    padding: 0 28px;
+}
+
+#area-semanas {
+    min-width: 0;
+}
+
+#Sidebar {
     position: sticky;
     top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
 }
 
 section {
-    background-color: var(--branco);
-    border-radius: 6px;
-    box-shadow: 0 2px 8px rgba(13, 31, 60, 0.10);
-    padding: 24px 28px;
-    border-top:3px solid var(--azul-escuro);
+    border: 1px solid var(--borda);
+    border-radius: 14px;
+    background: var(--branco);
+    box-shadow: var(--sombra);
 }
+
 .bloco-semana {
-    margin-bottom: 32px;
-    border: 3px solid transparent;
-    border-radius: 8px;
-    padding: 4px;
-    transition: border-color 0.2s;
+    margin-bottom: 24px;
+    padding: 18px;
+    border: 1px solid var(--borda);
+    border-left: 4px solid transparent;
+    border-radius: 14px;
+    transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
 }
+
 .bloco-semana.semana-selecionada {
-    border-color: var(--amarelo);
+    border-left-color: var(--amarelo);
+    box-shadow: 0 14px 34px rgba(16, 37, 68, 0.12);
 }
 
 .cabecalho-semana {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-bottom: 16px;
-    cursor: pointer;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: 44px;
+    margin-bottom: 18px;
 }
+
 .titulo-semana {
-    font-size: 1.1rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
+    min-width: 0;
+    padding: 4px 8px;
+    border-radius: 7px;
     color: var(--azul-escuro);
+    font-size: 1.08rem;
+    font-weight: 750;
+    letter-spacing: 0.015em;
+    text-transform: uppercase;
 }
 
 .titulo-semana:focus {
-    outline: none;
-    background-color: rgba(245, 196, 0, 0.15);
-    border-radius: 4px;
-    padding: 2px 6px;
+    outline: 3px solid rgba(245, 196, 0, 0.35);
+    background: #fff9dc;
+}
+
+.acoes-semana {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-pdf,
+.btn-excluir,
+.btn-minimizar-semana,
+.btn-excluir-linha,
+.btn-excluir-dia {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 34px;
+    padding: 6px 11px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background: transparent;
+    cursor: pointer;
+    font-size: 0.78rem;
+    font-weight: 700;
+    transition: color 160ms ease, background-color 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+
+.btn-pdf {
+    border-color: #f0d45b;
+    background: #fff9dc;
+    color: #735c00;
+    text-transform: uppercase;
+}
+
+.btn-pdf:hover {
+    border-color: var(--amarelo);
+    background: var(--amarelo);
+    color: var(--azul-escuro);
+}
+
+.btn-excluir,
+.btn-excluir-linha,
+.btn-excluir-dia {
+    border-color: #f3d6d6;
+    background: #fff7f7;
+    color: var(--perigo);
+}
+
+.btn-excluir:hover,
+.btn-excluir-linha:hover,
+.btn-excluir-dia:hover {
+    border-color: var(--perigo);
+    background: var(--perigo);
+    color: var(--branco);
 }
 
 .btn-minimizar-semana {
-    padding: 4px 10px;
-    border: transparent;
-    border-radius: 4px;
-    background: transparent;
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    color: #c2bfbf;
-    cursor: pointer;
+    width: 34px;
+    padding: 5px;
+    background: #f1f4f8;
+    color: var(--azul);
+    font-size: 0;
 }
+
+.btn-minimizar-semana::before {
+    width: 7px;
+    height: 7px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    content: "";
+    transform: translateY(-2px) rotate(45deg);
+    transition: transform 160ms ease;
+}
+
+.btn-minimizar-semana.semana-recolhida::before {
+    transform: translateX(-2px) rotate(-45deg);
+}
+
 .btn-minimizar-semana:hover {
-    color: var(--cinza-claro);  
+    background: #e3eaf3;
 }
-.acoes-semana {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-}
-.btn-pdf {
-    padding: 4px 10px;
-    border: 1.5px solid var(--amarelo);
-    border-radius: 4px;
-    background: transparent;
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    color: var(--azul-escuro);
-    cursor: pointer;
-}
-.btn-pdf:hover {
-    background-color: var(--amarelo);
-}
-.btn-excluir {
-    padding: 4px 10px;
-    border: 1.5px solid var(--branco)  ;
-    border-radius: 4px;
-    background: transparent;
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    color: #c2bfbf;
-    cursor: pointer;
-}
-.btn-excluir:hover {
-    border-color: #e53e3e;
-    color: #e53e3e;
-}
+
 .cabecalho-data {
     display: flex;
     align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
+    gap: 12px;
+    min-height: 42px;
+    margin: 4px 0 12px;
+}
 
-}
 .cabecalho-data h2 {
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--azul-escuro);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    flex: 1;
+    margin: 0;
+    color: var(--azul);
+    font-size: 0.9rem;
+    font-weight: 750;
+    letter-spacing: 0.035em;
+    text-transform: capitalize;
 }
+
+.input-data {
+    min-height: 38px;
+    padding: 7px 10px;
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    background: #f8fafd;
+    color: var(--texto-escuro);
+}
+
+.bloco-dia {
+    min-width: 0;
+    margin-top: 14px;
+    padding: 14px;
+    overflow-x: auto;
+    border: 1px solid var(--borda);
+    border-radius: 11px;
+    background: #fbfcfe;
+    scrollbar-color: #aebbd0 #edf1f6;
+    scrollbar-width: thin;
+}
+
 table {
     width: 100%;
-    border-collapse: collapse;
-    font-size: 0.92rem;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 0.88rem;
 }
+
+.bloco-dia table {
+    min-width: 790px;
+}
+
 thead tr {
-    background-color: var(--azul-escuro);
+    background: var(--azul-escuro);
     color: var(--branco);
 }
+
 thead th {
-    padding: 11px 14px;
+    padding: 12px 11px;
     text-align: left;
-    font-weight: 600;
-    letter-spacing: 0.05em;
+    font-size: 0.7rem;
+    font-weight: 750;
+    letter-spacing: 0.055em;
     text-transform: uppercase;
+    white-space: nowrap;
+}
+
+thead th:first-child {
+    border-radius: 8px 0 0;
+}
+
+thead th:last-child {
+    border-radius: 0 8px 0 0;
 }
 
 tbody tr {
-    border-bottom: 1px solid var(--cinza-claro);
-    
+    border-bottom: 1px solid var(--borda);
 }
-tbody td {
-    padding: 10px 14px;
+
+tbody td,
+tbody th {
+    padding: 7px 8px;
+    text-align: left;
 }
-tbody td {
-    padding: 6px 8px;
+
+.bloco-dia tbody tr:last-child td {
+    border-bottom: 1px solid var(--borda);
 }
+
+.bloco-dia tbody tr:hover {
+    background: #f5f8fc;
+}
+
+tbody input,
+#Configuracao input,
+#DadosUsuario input,
+#DadosUsuario select {
+    width: 100%;
+    min-height: 38px;
+    padding: 8px 10px;
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    outline: none;
+    background: var(--branco);
+    color: var(--texto-escuro);
+    transition: border-color 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+}
+
 tbody input {
-    width: 100%;
-    padding: 7px 10px;
-    border: 1.5px solid var(--cinza-claro);
-    border-radius: 4px;
-    font-size: 0.88rem;
-    color: var(--texto-escuro);
-    background: var(--cinza-claro);
+    min-width: 78px;
+    padding: 7px 9px;
+    background: #fff;
+    font-size: 0.86rem;
 }
-.acoes-dia {
-    margin-top: 4px;
+
+input:focus,
+select:focus {
+    border-color: #d4aa00;
+    box-shadow: 0 0 0 3px rgba(245, 196, 0, 0.2);
 }
-.acoes-dia button {
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    cursor: pointer;
+
+input[type="number"] {
+    font-variant-numeric: tabular-nums;
 }
-.btn-nova-linha {
-    display: block;
-    width: 100%;
-}
-.btn-proximo-dia{
-    display: block;
-    width: 100%;
-    margin-top: 24px;
-    border: 2px dashed var(--cinza-claro);
-    border-radius: 6px;
-    background: transparent;
-    font-size: 0.9rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--texto-escuro);
-    cursor: pointer;
-    padding: 8px 16px ;
-}
-.btn-proximo-dia:hover {
-    border-color: var(--amarelo);
-    color: var(--azul-escuro);
-}
+
 .total-km {
-    font-weight: 700;
     color: var(--azul-escuro);
+    font-weight: 750;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
 }
-#titulo-resumo {
-    font-size: 0.85rem;
+
+.acoes-dia {
+    margin-top: 10px;
+}
+
+.acoes-dia button {
+    padding: 8px 13px;
+    border: 1px solid #dce5f0;
+    border-radius: 8px;
+    background: #eef3f9;
+    color: var(--azul);
+    cursor: pointer;
+    font-size: 0.78rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--texto-escuro);
-    margin-bottom: 12px;
+    transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
 }
-#ResumoSemana thead th:last-child {
-    color: var(--amarelo);
+
+.acoes-dia button:hover {
+    border-color: #c7d4e4;
+    background: #e2eaf4;
 }
-#ResumoSemana tbody td:last-child {
-    color: var(--azul-escuro);
-    font-weight: 600;
-}
-#linha-total {
-    border-top: 2px solid var(--azul-escuro);
-    font-weight: 600;
-}
-#linha-total th,
-#linha-total td {
-    font-weight: 700;
-    padding: 10px 14px;
+
+.btn-proximo-dia,
+#btn-nova-semana {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px dashed #c8d3e1;
+    border-radius: 10px;
+    background: #f8fafd;
+    color: var(--azul);
+    cursor: pointer;
+    font-size: 0.82rem;
+    font-weight: 750;
+    letter-spacing: 0.035em;
     text-transform: uppercase;
+    transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease;
 }
+
+.btn-proximo-dia {
+    display: block;
+    margin-top: 16px;
+}
+
+.btn-proximo-dia:hover,
+#btn-nova-semana:hover {
+    border-color: #d8b000;
+    background: #fff9dc;
+    color: var(--azul-escuro);
+}
+
+#Sidebar > section {
+    padding: 20px;
+}
+
+#DadosUsuario,
 #Configuracao {
-    border-top-color: var(--amarelo);
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 15px;
 }
+
+#DadosUsuario div,
 #Configuracao div {
     display: flex;
     flex-direction: column;
     gap: 6px;
 }
+
+#DadosUsuario label,
 #Configuracao label {
-    font-size: 0.78rem;
-    font-weight: 600;
-    text-transform: uppercase;
+    color: var(--azul);
+    font-size: 0.72rem;
+    font-weight: 750;
     letter-spacing: 0.06em;
-    color: var(--azul-escuro);
+    text-transform: uppercase;
 }
+
+#DadosUsuario input,
+#DadosUsuario select,
 #Configuracao input {
-    width: 100%;
-    padding: 9px 12px;
-    border: 1.5px solid var(--cinza-claro);
-    border-radius: 4px;
-    font-size: 0.95rem;
-    color: var(--texto-escuro);
-    background: var(--cinza-claro);
+    background: #f8fafd;
+    font-size: 0.9rem;
+}
 
+#ResumoSemana {
+    overflow: hidden;
 }
-#Configuracao input:focus {
-    outline: none;
-    border-color: var(--amarelo);
-    box-shadow: 0 0 0 3px rgba(245,196,0,0.18);
-}
-#btn-nova-semana {
-width: 100%;
-padding: 10px;
-border: 2px dashed var(--cinza-claro);
-border-radius: 6px;
-background: transparent;
-font-size: 0.9rem;
-font-weight: 600;
-text-transform: uppercase;
-letter-spacing: 0.06em;
-color: var(--texto-escuro);
-cursor: pointer;
-}
-#btn-nova-semana:hover {
-    border-color: var(--amarelo);
+
+#titulo-resumo {
+    margin-bottom: 14px;
     color: var(--azul-escuro);
+    font-size: 0.92rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
 }
 
-.btn-excluir-linha {
-    padding: 4px 8px;
-    border: 1.5px solid #e53e33;
-    border-radius: 4px;
-    background: transparent;
-    color: #e53e33;
-    cursor: pointer;
+#ResumoSemana table {
+    font-size: 0.82rem;
 }
-.btn-excluir-linha:hover {
-    background-color: #e53e33;
-    color: var(--branco);
+
+#ResumoSemana thead th {
+    padding: 10px 8px;
+    font-size: 0.67rem;
 }
-.btn-excluir-dia {
-     padding: 4px 8px;
-    border: 1.5px solid #e53e33;
-    border-radius: 4px;
-    background: transparent;
-    color: #e53e33;
-    cursor: pointer;
+
+#ResumoSemana thead th:last-child {
+    color: var(--amarelo);
 }
-.btn-excluir-dia:hover {
-    background-color: #e53e33;
-    color: var(--branco);
+
+#ResumoSemana tbody td,
+#ResumoSemana tbody th {
+    padding: 8px;
+}
+
+#ResumoSemana tbody th {
+    color: var(--texto-suave);
+    font-size: 0.77rem;
+    font-weight: 650;
+    text-transform: capitalize;
+}
+
+#ResumoSemana tbody td:last-child {
+    color: var(--azul-escuro);
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+#linha-total {
+    background: #f4f7fb;
+}
+
+#linha-total th,
+#linha-total td {
+    border-top: 2px solid #d9e2ed;
+    color: var(--azul-escuro);
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+#btn-nova-semana {
+    padding: 13px;
 }
 
 .escondido {
     display: none;
 }
 
-#DadosUsuario {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+button:focus-visible {
+    outline: 3px solid rgba(245, 196, 0, 0.55);
+    outline-offset: 2px;
 }
 
-#DadosUsuario div {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
+@media (max-width: 1050px) {
+    main {
+        grid-template-columns: minmax(0, 1fr) 280px;
+        gap: 18px;
+        padding: 0 20px;
+    }
+
+    .bloco-semana {
+        padding: 14px;
+    }
+
+    #Sidebar > section {
+        padding: 17px;
+    }
 }
 
-#DadosUsuario label {
-    font-size: 0.78rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--azul-escuro);
+@media (max-width: 800px) {
+    main {
+        grid-template-columns: minmax(0, 1fr);
+        margin-top: 24px;
+    }
+
+    #Sidebar {
+        position: static;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        align-items: start;
+    }
+
+    #ResumoSemana {
+        grid-column: 1 / -1;
+        grid-row: 1;
+    }
 }
 
-#DadosUsuario input {
-    width: 100%;
-    padding: 9px 12px;
-    border: 1.5px solid var(--cinza-claro);
-    border-radius: 4px;
-    font-size: 0.95rem;
-    color: var(--texto-escuro);
-    background: var(--cinza-claro);
+@media (max-width: 560px) {
+    header {
+        padding: 20px 18px;
+    }
+
+    main {
+        gap: 16px;
+        margin: 18px auto;
+        padding: 0 12px;
+    }
+
+    .bloco-semana {
+        margin-bottom: 16px;
+        padding: 11px;
+    }
+
+    .cabecalho-semana {
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .titulo-semana {
+        padding: 5px 3px;
+        font-size: 0.92rem;
+    }
+
+    .acoes-semana {
+        gap: 4px;
+    }
+
+    .btn-pdf,
+    .btn-excluir {
+        min-height: 32px;
+        padding: 5px 7px;
+        font-size: 0.68rem;
+    }
+
+    .btn-minimizar-semana {
+        width: 32px;
+        min-height: 32px;
+    }
+
+    .bloco-dia {
+        padding: 10px;
+    }
+
+    .cabecalho-data {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .input-data {
+        min-width: 145px;
+    }
+
+    .cabecalho-data h2 {
+        min-width: 100%;
+        order: 1;
+    }
+
+    .btn-excluir-dia {
+        margin-left: auto;
+    }
+
+    #Sidebar {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    #ResumoSemana {
+        grid-column: auto;
+        grid-row: auto;
+    }
 }
 
-#DadosUsuario input:focus {
-    outline: none;
-    border-color: var(--amarelo);
-    box-shadow: 0 0 0 3px rgba(245,196,0,0.18);
-}
-
-#DadosUsuario select {
-    width: 100%;
-    padding: 9px 12px;
-    border: 1.5px solid var(--cinza-claro);
-    border-radius: 4px;
-    font-size: 0.95rem;
-    color: var(--texto-escuro);
-    background: var(--cinza-claro);
-    font-family: inherit;
-}
-
-#DadosUsuario select:focus {
-    outline: none;
-    border-color: var(--amarelo);
-    box-shadow: 0 0 0 3px rgba(245,196,0,0.18);
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
 }
